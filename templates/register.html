@@ -1,0 +1,20 @@
+
+<html>
+<body>
+{%if message %}
+{{message}}
+{%endif%}
+
+Register
+<form action="{% url 'register' %}", method='post'>
+{% csrf_token %}
+<input name="username", type="text"/>
+<input name="email", type="email"/>
+<input name="fullname", type="text"/>
+<input name="password", type="password"/>
+<input value="Register", type="submit"/>
+</form>
+<a href="{% url 'login' %}">Login</a>
+</body>
+
+</html>

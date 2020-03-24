@@ -1,3 +1,4 @@
+<a href="{% url 'index' %}">Back to home page</a>
 <form method="post", action="{% url 'post' %}">
 {% csrf_token %}
 <input type="text" name="title">
