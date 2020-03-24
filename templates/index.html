@@ -1,6 +1,4 @@
-{%for blog in blogs%}
-something
-{%endfor%}
+
 
 <div>
 {{user.username}}
@@ -8,6 +6,11 @@ something
 <div>
 {{user.first_name}}
 </div>
-{% load static %}
+
 <a href="{% url 'logout' %}">logout</a>
+{%for blog in blogs%}
+
+<a href="{% url 'detail' blog.id %}">{{blog}}</a>
+{%endfor%}
+{% load static %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
