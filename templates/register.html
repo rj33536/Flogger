@@ -6,6 +6,7 @@
 {%endif%}
 
 Register
+<a href="{% url 'index' %}">Back to home page</a>
 <form action="{% url 'register' %}", method='post'>
 {% csrf_token %}
 <input name="username", type="text"/>

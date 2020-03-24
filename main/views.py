@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
 from .models import blog
 from django.urls import reverse
@@ -7,12 +7,19 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 # Create your views here.
 
+def Clap(request, blog_id):
+	myblog = blog.objects.get(id=blog_id)
+	clapper= request.user
+	myblog.claps.add(clapper)
+	return HttpResponse("Success")
+
+
 def view_details(request,id):
 	if not request.user.is_authenticated:
 		return render(request,'login.html',{"message":"You need to login first before posting"})
 	context = {
 		"blog":blog.objects.get(id=id),
-		"user":request.user
+		"user":request.user,
 		}
 	return render(request,"view.html",context=context)
 
@@ -82,9 +89,9 @@ def post_blog(request):
 
 
 def index(request):
-	if not request.user.is_authenticated:
-    		return render(request,'login.html',{"message":None})
 	user = request.user
+	if not request.user.is_authenticated:
+		user = None
 	context={
 		'blogs':blog.objects.all(), 
 		'user':user,

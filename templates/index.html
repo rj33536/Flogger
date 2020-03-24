@@ -9,7 +9,11 @@
 
 <a href="{% url 'myblogs' %}">My Blogs</a>
 <a href="{% url 'post' %}">Post a Blog</a>
-<a href="{% url 'logout' %}">logout</a>
+{% if user %}
+<a href="{% url 'logout' %}">Logout</a>
+{% else %}
+<a href="{% url 'login' %}">Login</a>
+{% endif %}
 <ul>
 {%for blog in blogs%}
 <li>

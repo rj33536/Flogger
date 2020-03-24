@@ -1,3 +1,18 @@
 {{blog}}
-
+<input value="clap", type="submit" onclick="clap()"/>
 <a href="{% url 'index' %}">Back to home page</a>
+
+<script>
+function clap() {
+    console.log("here");
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     var res = this.responseText;
+     console.log(res)
+    }
+  };
+  xhttp.open("GET", "{% url 'clap' blog.id %}", true);
+  xhttp.send();
+}
+</script>

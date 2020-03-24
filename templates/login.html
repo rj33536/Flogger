@@ -6,6 +6,7 @@
 {%endif%}
 
 Login
+<a href="{% url 'index' %}">Back to home page</a>
 <form action="{% url 'login' %}", method='post'>
 {% csrf_token %}
 <input name="username", type="text"/>
