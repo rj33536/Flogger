@@ -1,0 +1,17 @@
+
+<html>
+<body>
+{%if message %}
+{{message}}
+{%endif%}
+
+Login
+<form action="{% url 'login' %}", method='post'>
+{% csrf_token %}
+<input name="username", type="text"/>
+<input name="password", type="password"/>
+<input value="Login", type="submit"/>
+</form>
+</body>
+
+</html>

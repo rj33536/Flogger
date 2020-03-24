@@ -1,7 +1,13 @@
 {%for blog in blogs%}
 something
 {%endfor%}
-dbujt
 
+<div>
+{{user.username}}
+</div>
+<div>
+{{user.first_name}}
+</div>
 {% load static %}
+<a href="{% url 'logout' %}">logout</a>
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
