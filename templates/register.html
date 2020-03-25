@@ -1,6 +1,5 @@
-
-<html>
-<body>
+{% extends 'base.html' %}
+{% block body %}
 {%if message %}
 {{message}}
 {%endif%}
@@ -16,6 +15,4 @@ Register
 <input value="Register", type="submit"/>
 </form>
 <a href="{% url 'login' %}">Login</a>
-</body>
-
-</html>
+{% endblock body %}

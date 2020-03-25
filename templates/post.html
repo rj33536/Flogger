@@ -1,4 +1,6 @@
-<a href="{% url 'index' %}">Back to home page</a>
+{% extends 'base.html' %}
+{% block body %}
+
 <form method="post", action="{% url 'post' %}">
 {% csrf_token %}
 <input type="text" name="title">
@@ -7,3 +9,4 @@
 </textarea > 
 <input type="submit" value="Post">
 </form>
+{% endblock body %}

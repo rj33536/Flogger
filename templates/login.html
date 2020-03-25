@@ -1,6 +1,5 @@
-
-<html>
-<body>
+{% extends 'base.html' %}
+{% block body %}
 {%if message %}
 {{message}}
 {%endif%}
@@ -14,6 +13,4 @@ Login
 <input value="Login", type="submit"/>
 </form>
 <a href="{% url 'register' %}">Register</a>
-</body>
-
-</html>
+{% endblock body %}

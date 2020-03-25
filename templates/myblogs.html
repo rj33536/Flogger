@@ -1,15 +1,6 @@
 
-
-<div>
-{{user.username}}
-</div>
-<div>
-{{user.first_name}}
-</div>
-<a href="{% url 'post' %}">Post a Blog</a>
-<a href="{% url 'logout' %}">logout</a>
-
-<a href="{% url 'index' %}">Back to home page</a>
+{% extends 'base.html' %}
+{% block body %}
 <ul>
 
 {%for blog in blogs%}
@@ -21,3 +12,5 @@
 </ul>
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{% endblock body %}

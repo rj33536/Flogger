@@ -1,6 +1,28 @@
-{{blog}}
-<input value="clap", type="submit" onclick="clap()"/>
-<a href="{% url 'index' %}">Back to home page</a>
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container">
+<div class="col">
+<h2>{{blog.title}}</h2>
+
+<p>{{blog.text}}</p>
+<div class="row">
+
+<input type="submit" class="text-secondary bg-primary" id="clap" onclick="clap()" value="clap">
+
+</div>
+<div class="comments">
+<textarea name="content"></textarea > 
+<input type="submit" onclick="comment" value="Comment">
+
+<ul>
+{% for comment in blog.comments.all %}
+<li>{{comment.text}}, {{comment.commentator}}</li>
+{% endfor %}
+</ul>
+</div>
+</div>
+</div>
 
 <script>
 function clap() {
@@ -9,10 +31,18 @@ function clap() {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
      var res = this.responseText;
-     console.log(res)
+     console.log(res);
+     if(res=="Success"){
+       var btn=document.body.querySelector('#clap');
+       console.log(res);
+       btn.className="text-primary";
+     }
     }
   };
   xhttp.open("GET", "{% url 'clap' blog.id %}", true);
   xhttp.send();
 }
 </script>
+
+{% endblock body %}
+

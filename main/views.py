@@ -5,6 +5,7 @@ from .models import blog
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def Clap(request, blog_id):
@@ -23,6 +24,7 @@ def view_details(request,id):
 		}
 	return render(request,"view.html",context=context)
 
+@login_required
 def myblogs(request):
 	if not request.user.is_authenticated:
     		return render(request,'login.html',{"message":None})
