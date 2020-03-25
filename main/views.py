@@ -14,6 +14,12 @@ def Clap(request, blog_id):
 	myblog.claps.add(clapper)
 	return HttpResponse("Success")
 
+def userprofile(request,username):
+	user = User.objects.get(username=username)
+	context = {
+		"userprofile": user,
+		}
+	return render(request,"profile.html",context=context)
 
 def view_details(request,id):
 	if not request.user.is_authenticated:

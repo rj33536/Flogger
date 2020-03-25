@@ -8,5 +8,6 @@ urlpatterns = [
     path('view/<int:id>',views.view_details,name="detail"),
     path('myblogs',views.myblogs, name="myblogs"),
     path('register',views.register,name="register"),
-    path('clap/<int:blog_id>',views.Clap,name="clap")
+    path('clap/<int:blog_id>',views.Clap,name="clap"),
+    path('users/<str:username>',views.userprofile, name="profile")
 ]
