@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="container">
-<div class="col">
+<div >
 <h2>{{blog.title}}</h2>
 
 <p>{{blog.text}}</p>
@@ -11,6 +11,11 @@
 <input type="submit" class="text-secondary bg-primary" id="clap" onclick="clap()" value="clap">
 
 </div>
+<div class="fb-like" data-href="{% url 'detail' blog.id %}" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
+<br>
+<a href="https://twitter.com/Rohitja52232082?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @Rohitja52232082</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
 <div class="comments">
 <textarea name="content"></textarea > 
 <input type="submit" onclick="comment" value="Comment">
