@@ -25,3 +25,7 @@ class Comment(models.Model):
 	post = models.ForeignKey(blog, on_delete=models.CASCADE, related_name='comments')
 	commentator = models.ForeignKey(User,on_delete = models.CASCADE, related_name="commmentator")
 	text = models.TextField()
+
+class Profile(models.Model):
+	user = models.ForeignKey(User,on_delete = models.CASCADE, related_name="user")
+	models.ImageField( upload_to='profile', blank=True)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import blog
+from .models import blog, Profile
 
 class BlogForm(forms.ModelForm):
     class Meta:
@@ -10,3 +10,9 @@ class BlogForm(forms.ModelForm):
             'image'
         ]
     
+class ProfileForm(forms.Form):
+    pass
+    
+    
+
+

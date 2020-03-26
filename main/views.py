@@ -12,6 +12,9 @@ from .forms import BlogForm
 def Clap(request, blog_id):
 	myblog = blog.objects.get(id=blog_id)
 	clapper= request.user
+	if clapper in myblog.claps.all():
+		myblog.claps.remove(clapper)
+		return HttpResponse("unclap")
 	myblog.claps.add(clapper)
 	return HttpResponse("Success")
 

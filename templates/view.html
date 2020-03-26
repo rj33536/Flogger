@@ -7,9 +7,11 @@
 
 <p>{{blog.text}}</p>
 <div class="row">
-
-<input type="submit" class="text-secondary bg-primary" id="clap" onclick="clap()" value="clap">
-
+{% if user in blog.claps.all %}
+<input type="submit" class="text-white bg-primary bold" id="clap" onclick="clap()" value="clap">
+{% else %}
+<input type="submit" class="text-dark bg-white bold" id="clap" onclick="clap()" value="clap">
+{% endif %}
 </div>
 <div class="fb-like" data-href="{% url 'detail' blog.id %}" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
 <br>
@@ -40,7 +42,12 @@ function clap() {
      if(res=="Success"){
        var btn=document.body.querySelector('#clap');
        console.log(res);
-       btn.className="text-primary";
+       btn.className="text-white bg-primary bold";
+     }
+     if(res=='unclap'){
+       var btn=document.body.querySelector('#clap');
+       console.log(res);
+       btn.className="text-dark bg-white bold";
      }
     }
   };
