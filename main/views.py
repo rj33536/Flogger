@@ -83,18 +83,20 @@ def logout(request):
 def post_blog(request):
 	if not request.user.is_authenticated:
 		return render(request,'login.html',{"message":"You need to login first before posting"})
-	'''
-	form = BlogForm(request.POST or None)
-	print(form)
-	if form.is_valid():
-		form.save()
-		form = BlogForm()
+	form = BlogForm()
+	if request.method=='POST':
+		form = BlogForm(request.POST)
+		if form.is_valid():
+			obj = form.save(commit=False)
+			obj.author = request.user
+			obj.save()
+			form = BlogForm()
 	
 	context = {
 		'form':form 
 	}
 	return render(request,"post.html",context)
-	'''
+	
 	try:
 		text = request.POST["content"]
 		title=request.POST["title"]
