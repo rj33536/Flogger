@@ -4,7 +4,11 @@
 {{message}}
 {%endif%}
 
-Login
+{% load static %}
+
+<link rel="stylesheet" href="{% static '/css/forms.css' %}">
+<h1>Login</h1>
+<!-- 
 <a href="{% url 'index' %}">Back to home page</a>
 <form action="{% url 'login' %}", method='post'>
 {% csrf_token %}
@@ -12,5 +16,18 @@ Login
 <input name="password", type="password"/>
 <input value="Login", type="submit"/>
 </form>
-<a href="{% url 'register' %}">Register</a>
+<a href="{% url 'register' %}">Register</a> -->
+<form>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1">
+    </div>
+   
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
 {% endblock body %}
