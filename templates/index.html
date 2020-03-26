@@ -1,13 +1,35 @@
 {% extends 'base.html' %}
 {% block body %}
-<ul>
+<!-- <ul>
 {%for blog in blogs%}
 <li>
 <a href="{% url 'detail' blog.id %}">{{blog}}</a>
 
 </li>
 {%endfor%}
-</ul>
+</ul> -->
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static '/css/style.css' %}">
+
+<div id="carouselcap" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+          <img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" class="d-block w-100" alt="..." style="height:80vh">
+        <div class="carousel-caption">
+          <h2>Rohit's Blog</h2>
+          <p>Contribute from your end to make it big</p>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- for loop here -->
+<div class="card" >
+  <img src="https://images.unsplash.com/photo-1490533658566-1855b89cd85f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=985&q=80" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+<!-- endfor -->
 {% endblock body %}
