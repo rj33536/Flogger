@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .forms import BlogForm
 # Create your views here.
 
 def Clap(request, blog_id):
@@ -82,7 +83,18 @@ def logout(request):
 def post_blog(request):
 	if not request.user.is_authenticated:
 		return render(request,'login.html',{"message":"You need to login first before posting"})
-
+	'''
+	form = BlogForm(request.POST or None)
+	print(form)
+	if form.is_valid():
+		form.save()
+		form = BlogForm()
+	
+	context = {
+		'form':form 
+	}
+	return render(request,"post.html",context)
+	'''
 	try:
 		text = request.POST["content"]
 		title=request.POST["title"]

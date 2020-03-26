@@ -54,7 +54,7 @@
         <a class="nav-link" href="{% url 'post' %}">Post a Blog</a>
       </li>
       
-        {% if user %}
+        {% if user.is_authenticated %}
         <li class="nav-item">
 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
 </li>

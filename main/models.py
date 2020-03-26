@@ -11,6 +11,7 @@ class blog(models.Model):
 	text = models.TextField()
 	created_date = models.DateTimeField(blank=True,null=True)
 	publish_date = models.DateTimeField(blank = True,null = True)
+	image = models.ImageField( upload_to='blog_images', blank=True)
 	claps = models.ManyToManyField(User, related_name="clappers")
 	def publish(self):
 		self.publish_date = timezone.now()
