@@ -3,23 +3,22 @@
 {% block body %}
 <div class="container">
 <div >
-<h2>{{blog.title}}</h2>
-
+<h2 style="border-bottom:1px solid !important;padding:10px;">{{blog.title}}</h2>
+<div class="row" >
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<div class="fb-like" data-href="{% url 'detail' blog.id %}" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
+</div>
 <p>{{blog.text}}</p>
 <div class="row">
 {% if user in blog.claps.all %}
 <input type="submit" class="text-white bg-primary bold" id="clap" onclick="clap()" value="clap">
 {% else %}
-<input type="submit" class="text-dark bg-white bold" id="clap" onclick="clap()" value="clap">
+<input type="submit" class="text-dark bg-white bold align-self-center" id="clap" onclick="clap()" value="clap">
 {% endif %}
 </div>
-<div class="fb-like" data-href="{% url 'detail' blog.id %}" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
-<br>
-<a href="https://twitter.com/Rohitja52232082?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @Rohitja52232082</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 
 <div class="comments">
-<textarea name="content"></textarea > 
+<textarea name="content" class="form-control"></textarea > 
 <input type="submit" onclick="comment" value="Comment">
 
 <ul>
@@ -32,6 +31,16 @@
 </div>
 
 <script>
+/*
+$("#clap").click(function(){
+  $.get("{% url 'clap' blog.id %}", function(data, status){
+    if(status==200){
+      
+    }
+    alert("Something went wrong");
+  });
+});*/
+
 function clap() {
     console.log("here");
   var xhttp = new XMLHttpRequest();
@@ -41,12 +50,10 @@ function clap() {
      console.log(res);
      if(res=="Success"){
        var btn=document.body.querySelector('#clap');
-       console.log(res);
        btn.className="text-white bg-primary bold";
      }
      if(res=='unclap'){
        var btn=document.body.querySelector('#clap');
-       console.log(res);
        btn.className="text-dark bg-white bold";
      }
     }

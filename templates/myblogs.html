@@ -2,13 +2,24 @@
 {% extends 'base.html' %}
 {% block body %}
 <ul>
-
-{%for blog in blogs%}
-<li>
-<a href="{% url 'detail' blog.id %}">{{blog}}</a>
-
-</li>
-{%endfor%}
+{% if blogs %}
+{% for blog in blogs %}
+<div class="card" >
+{% if blog.image %}
+  <img src="{{blog.image.url}}" class="card-img-top" alt="...">
+{% else %}
+  <img src="https://images.unsplash.com/photo-1490533658566-1855b89cd85f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=985&q=80" class="card-img-top" alt="...">
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{blog.title}}</h5>
+    <p class="card-text">{{blog.text}}</p>
+    <a href="{% url 'detail' blog.id %}" class="btn btn-primary">Read more</a>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<h2>You have not written any blogs</h2>
+{% endif %}
 </ul>
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
