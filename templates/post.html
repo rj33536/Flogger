@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<form method="post", class=" form-group text-center border border-dark m-5 p-5" action="{% url 'post' %}">
+<form method="post", class=" form-group text-center border border-dark m-5 p-5" enctype='multipart/form-data' action="{% url 'post' %}">
 {% csrf_token %}
 {{form.as_p}}
 <input type="submit" name="submit" value="Draft"/>

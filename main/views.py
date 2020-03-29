@@ -111,7 +111,7 @@ def logout(request):
 def post_blog(request):
 	form = BlogForm()
 	if request.method=='POST':
-		form = BlogForm(request.POST)
+		form = BlogForm(request.POST, request.FILES)
 		if form.is_valid():
 			obj = form.save(commit=False)
 			obj.author = request.user
