@@ -4,15 +4,31 @@
 {{message}}
 {%endif%}
 
-Register
-<a href="{% url 'index' %}">Back to home page</a>
-<form action="{% url 'register' %}", method='post'>
+{% load static %}
+
+<link rel="stylesheet" href="{% static '/css/forms.css' %}">
+<p class="display-4 text-center"> Register</p>
+<form action="{% url 'register' %}", method='post' class="container">
 {% csrf_token %}
-<input name="username", type="text"/>
-<input name="email", type="email"/>
-<input name="fullname", type="text"/>
-<input name="password", type="password"/>
-<input value="Register", type="submit"/>
+<div class="form-group">
+<label for="username">Username</label>
+<input name="username", type="text" class="form-control"/>
+</div>
+
+<div class="form-group">
+<label for="email">Email</label>
+<input name="email", type="email" class="form-control"/>
+</div>
+
+<div class="form-group">
+<label for="fullname">Full name</label>
+<input name="fullname", type="text" class="form-control"/>
+</div>
+
+<div class="form-group">
+<label for="password">Password</label>
+<input name="password", type="password" class="form-control"/>
+</div>
+<input value="Register", type="submit" class="btn btn-primary"/>
 </form>
-<a href="{% url 'login' %}">Login</a>
 {% endblock body %}

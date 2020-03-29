@@ -1,34 +1,37 @@
-form{
+form {
     /* border-style: dashed; */
-    border:1px solid rgb(253, 173, 173);
-    width:50%;
-    margin: 50px auto;
-    background-color:rgb(11, 65, 61);
+    width: 50%;
+    margin: 5% auto;
+    background-color: rgb(11, 65, 61);
     border-radius: 10px;
-    height:500px;
+    height: auto;
+    padding: 5%;
 }
-h1{
+
+h1 {
     font-size: 80px;
     text-align: center;
     font-weight: 500;
     color: crimson;
 }
-label{
+
+label {
     font-size: 30px;
     color: white;
     margin: 10px;
 }
-.form-group{
+
+.form-group {
     width: 60%;
     margin: auto;
     padding-top: 20px;
 }
 
-.btn{
+.btn {
     /* margin: 60px ; */
     margin-left: 40%;
     margin-top: 60px;
     padding-right: 30px;
     padding-left: 30px;
-    
+
 }

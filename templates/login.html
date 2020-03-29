@@ -8,26 +8,18 @@
 
 <link rel="stylesheet" href="{% static '/css/forms.css' %}">
 <h1>Login</h1>
-<!-- 
-<a href="{% url 'index' %}">Back to home page</a>
-<form action="{% url 'login' %}", method='post'>
-{% csrf_token %}
-<input name="username", type="text"/>
-<input name="password", type="password"/>
-<input value="Login", type="submit"/>
-</form>
-<a href="{% url 'register' %}">Register</a> -->
-<form action="{% url 'login' %}", method='post'>
+<form action="{% url 'login' %}", method='post' class="center">
 {% csrf_token %}
     <div class="form-group">
       <label for="username">Username</label>
       <input type="text" class="form-control" id="username" name="username">
     </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
+      <label for="password">Password</label>
       <input type="password" class="form-control" id="exampleInputPassword1" name="password">
     </div>
    
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+  nh,mn
 {% endblock body %}

@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="container">
-<div >
-<h2 style="border-bottom:1px solid !important;padding:10px;">{{blog.title}}</h2>
+<div class="container-sm">
+<p class="display-4" style="border-bottom:1px solid !important;padding:10px;">{{blog.title}}</p>
+<p class="small">Last updated on {{blog.publish_date}}</p>
+<div class="row" >
+<img src = "https://cdn.onlinewebfonts.com/svg/img_383210.png" height=96 width=96 class="rounded-circle">
+ <h1><small>{{blog.author}}</small></h1>
+ </div>
 <div class="row" >
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <div class="fb-like" data-href="{% url 'detail' blog.id %}" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
 </div>
+<img src = "{{blog.image.url}}" class="h-75 w-100">
 <p>{{blog.text}}</p>
 <div class="row">
 {% if user in blog.claps.all %}
@@ -28,18 +33,8 @@
 </ul>
 </div>
 </div>
-</div>
 
 <script>
-/*
-$("#clap").click(function(){
-  $.get("{% url 'clap' blog.id %}", function(data, status){
-    if(status==200){
-      
-    }
-    alert("Something went wrong");
-  });
-});*/
 
 function clap() {
     console.log("here");
