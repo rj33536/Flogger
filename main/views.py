@@ -7,7 +7,24 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import BlogForm
+from django.shortcuts import get_object_or_404
 # Create your views here.
+@login_required(redirect_field_name='login')
+def publish(request,blog_id):
+	myblog = get_object_or_404(blog,id=blog_id)
+	if myblog.author==request.user:
+
+		myblog.is_publish = not myblog.is_publish
+		myblog.publish()
+	return HttpResponseRedirect(reverse("myblogs"))	
+
+@login_required(redirect_field_name='login')
+def delete(request,blog_id):
+	myblog = get_object_or_404(blog,id=blog_id)
+	if myblog.author==request.user:
+		myblog.delete()
+	return HttpResponseRedirect(reverse("myblogs"))	
+
 
 @login_required(redirect_field_name='login')
 def Clap(request, blog_id):
@@ -23,11 +40,11 @@ def Clap(request, blog_id):
 @login_required(redirect_field_name='login')
 def comment(request, blog_id):
 	c = request.POST["comment"]
-	post = blog.objects.get(id=blog_id)
+	post = get_object_or_404(blog, id=blog_id)
 	print(c)
 	mycomment = Comment(post = post, commentator = request.user, text = c)
 	mycomment.save()
-	return HttpResponseRedirect(reverse("index"))
+	return HttpResponseRedirect(reverse("detail",kwargs={"id":blog_id}))
 
 def userprofile(request,username):
 	user = User.objects.get(username=username)
@@ -38,7 +55,7 @@ def userprofile(request,username):
 
 def view_details(request,id):
 	context = {
-		"blog":blog.objects.get(id=id),
+		"blog":get_object_or_404(blog, id=id),
 		"user":request.user,
 		}
 	return render(request,"view.html",context=context)
@@ -49,7 +66,7 @@ def myblogs(request):
 	MyBlogs = blog.objects.filter(author = user)
 	context ={
 		"user":user,
-		"blogs":MyBlogs,
+		"blogs":MyBlogs[::-1],
 	}
 	return render(request,'myblogs.html',context=context)
 
@@ -98,6 +115,8 @@ def post_blog(request):
 		if form.is_valid():
 			obj = form.save(commit=False)
 			obj.author = request.user
+			if request.POST["submit"]=="Publish":
+				obj.is_publish = True
 			obj.save()
 			form = BlogForm()
 	
@@ -112,7 +131,7 @@ def index(request):
 	if not request.user.is_authenticated:
 		user = None
 	context={
-		'blogs':blog.objects.all(), 
+		'blogs':blog.objects.filter(is_publish=True), 
 		'user':user,
 	}
 	return render(request,'index.html',context=context)

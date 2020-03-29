@@ -13,6 +13,8 @@ urlpatterns = [
     path('clap/<int:blog_id>',views.Clap,name="clap"),
     path('comment/<int:blog_id>',views.comment,name="comment"),
     path('users/<str:username>',views.userprofile, name="profile"),
+    path('publish/<int:blog_id>',views.publish,name="publish"),
+    path('delete/<int:blog_id>',views.delete,name="delete")
 
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

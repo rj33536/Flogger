@@ -12,7 +12,8 @@ class blog(models.Model):
 	created_date = models.DateTimeField(blank=True,null=True)
 	publish_date = models.DateTimeField(blank = True,null = True)
 	image = models.ImageField( upload_to='blog_images', blank=True)
-	claps = models.ManyToManyField(User, related_name="clappers")
+	claps = models.ManyToManyField(User, related_name="clappers", blank=True)
+	is_publish = models.BooleanField(blank=True, default=False)
 	def publish(self):
 		self.publish_date = timezone.now()
 		self.created_date = timezone.now()
@@ -30,4 +31,4 @@ class Comment(models.Model):
 
 class Profile(models.Model):
 	user = models.ForeignKey(User,on_delete = models.CASCADE, related_name="user")
-	models.ImageField( upload_to='profile', blank=True)
+	image = models.ImageField( upload_to='profile', blank=True)
