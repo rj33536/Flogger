@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
-from .models import blog
+from .models import blog, Comment
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import BlogForm
 # Create your views here.
 
+@login_required(redirect_field_name='login')
 def Clap(request, blog_id):
 	myblog = blog.objects.get(id=blog_id)
 	clapper= request.user
@@ -18,6 +19,16 @@ def Clap(request, blog_id):
 	myblog.claps.add(clapper)
 	return HttpResponse("Success")
 
+
+@login_required(redirect_field_name='login')
+def comment(request, blog_id):
+	c = request.POST["comment"]
+	post = blog.objects.get(id=blog_id)
+	print(c)
+	mycomment = Comment(post = post, commentator = request.user, text = c)
+	mycomment.save()
+	return HttpResponseRedirect(reverse("index"))
+
 def userprofile(request,username):
 	user = User.objects.get(username=username)
 	context = {
@@ -26,20 +37,15 @@ def userprofile(request,username):
 	return render(request,"profile.html",context=context)
 
 def view_details(request,id):
-	if not request.user.is_authenticated:
-		return render(request,'login.html',{"message":"You need to login first before posting"})
 	context = {
 		"blog":blog.objects.get(id=id),
 		"user":request.user,
 		}
 	return render(request,"view.html",context=context)
 
-@login_required
+@login_required(redirect_field_name='login')
 def myblogs(request):
-	if not request.user.is_authenticated:
-    		return render(request,'login.html',{"message":None})
 	user = request.user
-	
 	MyBlogs = blog.objects.filter(author = user)
 	context ={
 		"user":user,
@@ -79,13 +85,13 @@ def login(request):
 	except Exception as e:
 		return render(request,"login.html",{"message":None})
 
+@login_required(redirect_field_name='login')
 def logout(request):
 	auth_logout(request)
 	return HttpResponseRedirect(reverse("index"))
 
+@login_required(redirect_field_name='login')
 def post_blog(request):
-	if not request.user.is_authenticated:
-		return render(request,'login.html',{"message":"You need to login first before posting"})
 	form = BlogForm()
 	if request.method=='POST':
 		form = BlogForm(request.POST)
@@ -100,18 +106,6 @@ def post_blog(request):
 	}
 	return render(request,"post.html",context)
 	
-	try:
-		text = request.POST["content"]
-		title=request.POST["title"]
-		myblog = blog(author=request.user,title=title,text=text,created_date=timezone.now())
-		myblog.publish()
-		print(myblog)
-		return HttpResponseRedirect(reverse("index"))
-	except Exception as e:
-		print(e)
-		return render(request,'post.html')
-	
-
 
 def index(request):
 	user = request.user

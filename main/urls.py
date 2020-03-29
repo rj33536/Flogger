@@ -11,6 +11,7 @@ urlpatterns = [
     path('myblogs',views.myblogs, name="myblogs"),
     path('register',views.register,name="register"),
     path('clap/<int:blog_id>',views.Clap,name="clap"),
+    path('comment/<int:blog_id>',views.comment,name="comment"),
     path('users/<str:username>',views.userprofile, name="profile"),
 
 ] 

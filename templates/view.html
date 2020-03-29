@@ -23,9 +23,11 @@
 </div>
 
 <div class="comments">
-<textarea name="content" class="form-control"></textarea > 
-<input type="submit" onclick="comment" value="Comment">
-
+<form method="post" action="{% url 'comment' blog.id %}">
+{% csrf_token %}
+<input name="comment" class="form-control"/>
+<input type="submit" onclick="comment"  value="Comment">
+</form>
 <ul>
 {% for comment in blog.comments.all %}
 <li>{{comment.text}}, {{comment.commentator}}</li>
