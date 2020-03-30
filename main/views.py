@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
-from .models import blog, Comment
+from .models import blog, Comment, Profile
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -20,9 +20,9 @@ def edit(request,blog_id):
 			if form.is_valid():
 				obj = form.save(commit=False)
 				obj.author = request.user
+				obj.create()
 				if request.POST["submit"]=="Publish":
-					obj.is_publish = True
-				obj.save()
+					obj.publish()
 				form = BlogForm()
 		context = {
 			'form':form 
@@ -35,7 +35,6 @@ def edit(request,blog_id):
 def publish(request,blog_id):
 	myblog = get_object_or_404(blog,id=blog_id)
 	if myblog.author==request.user:
-
 		myblog.is_publish = not myblog.is_publish
 		myblog.publish()
 	return HttpResponseRedirect(reverse("myblogs"))	
@@ -61,15 +60,17 @@ def Clap(request, blog_id):
 
 @login_required(redirect_field_name='login')
 def comment(request, blog_id):
-	c = request.POST["comment"]
+	c = request.POST.get('comment', False)
+	print(request.POST.keys(),c)
 	post = get_object_or_404(blog, id=blog_id)
 	if c!="":
 		mycomment = Comment(post = post, commentator = request.user, text = c)
 		mycomment.save()
+	return HttpResponse("success")
 	return HttpResponseRedirect(reverse("detail",kwargs={"id":blog_id}))
 
 def userprofile(request,username):
-	user = User.objects.get(username=username)
+	user = get_object_or_404(User,username=username)
 	context = {
 		"userprofile": user,
 		}
@@ -137,9 +138,9 @@ def post_blog(request):
 		if form.is_valid():
 			obj = form.save(commit=False)
 			obj.author = request.user
+			obj.create()
 			if request.POST["submit"]=="Publish":
-				obj.is_publish = True
-			obj.save()
+				obj.publish()
 			form = BlogForm()
 	
 	context = {

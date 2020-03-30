@@ -23,12 +23,10 @@
 </div>
 
 <div class="comments">
-<form method="post" action="{% url 'comment' blog.id %}">
-{% csrf_token %}
-<input name="comment" class="form-control"/>
-<input type="submit" class="btn btn-Success" onclick="comment"  value="Comment">
-</form>
-<ul>
+<input name="comment" id="mycomment" class="form-control"/>
+<input type="submit" class="btn btn-Success" onclick="comment()"  value="Comment please">
+
+<ul id="commentslist">
 {% for comment in blog.comments.all %}
 <li>{{comment.text}}, {{comment.commentator}}</li>
 {% endfor %}
@@ -38,9 +36,9 @@
 
 <script>
 
+  var xhttp = new XMLHttpRequest();
 function clap() {
     console.log("here");
-  var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
      var res = this.responseText;
@@ -56,8 +54,33 @@ function clap() {
     }
   };
   xhttp.open("GET", "{% url 'clap' blog.id %}", true);
+  
   xhttp.send();
 }
+
+function comment() {
+  var c= document.body.querySelector('#mycomment').value;
+  xhttp.open("POST", "{% url 'comment' blog.id %}", true);
+  xhttp.setRequestHeader("X-CSRFToken", "{{csrf_token}}");
+  xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhttp.send("comment="+c);
+  xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+     var res = this.responseText;
+     console.log(res);
+     if(res=="success"){
+       var list = document.body.querySelector("#commentslist");
+       var node = document.createElement("LI");                 // Create a <li> node
+       var textnode = document.createTextNode(c+",{{user}}");         // Create a text node
+       node.appendChild(textnode);                              // Append the text to <li>
+       list.appendChild(node); 
+     }
+    }
+  };
+  
+   
+}
+
 </script>
 
 {% endblock body %}

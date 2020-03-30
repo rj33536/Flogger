@@ -15,7 +15,10 @@ class blog(models.Model):
 	claps = models.ManyToManyField(User, related_name="clappers", blank=True)
 	is_publish = models.BooleanField(blank=True, default=False)
 	def publish(self):
+		self.is_publish = True
 		self.publish_date = timezone.now()
+		self.save()
+	def create(self):
 		self.created_date = timezone.now()
 		self.save()
 	
