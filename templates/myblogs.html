@@ -19,6 +19,7 @@
     {% else %}
     <a href="{% url 'publish' blog.id %}" class="btn btn-secondary">UnPublish</a>
     {% endif %}
+    <a href="{% url 'edit' blog.id %}" class="btn btn-warning">Edit</a>
     <a href="{% url 'delete' blog.id %}" class="btn btn-danger">Delete</a>
   </div>
 </div>

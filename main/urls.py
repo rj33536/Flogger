@@ -14,7 +14,8 @@ urlpatterns = [
     path('comment/<int:blog_id>',views.comment,name="comment"),
     path('users/<str:username>',views.userprofile, name="profile"),
     path('publish/<int:blog_id>',views.publish,name="publish"),
-    path('delete/<int:blog_id>',views.delete,name="delete")
+    path('delete/<int:blog_id>',views.delete,name="delete"),
+    path('edit/<int:blog_id>', views.edit, name="edit")
 
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

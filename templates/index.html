@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
 
-{% load static %}
-<link rel="stylesheet" href="{% static '/css/style.css' %}">
-
 <div id="carouselcap" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
@@ -27,6 +24,15 @@
     <h5 class="card-title">{{blog.title}}</h5>
     <p class="card-text">{{blog.text}}</p>
     <a href="{% url 'detail' blog.id %}" class="btn btn-primary">Read more</a>
+    {% if user == blog.author %}
+    {% if not blog.is_publish %}
+    <a href="{% url 'publish' blog.id %}" class="btn btn-success">Publish</a>
+    {% else %}
+    <a href="{% url 'publish' blog.id %}" class="btn btn-secondary">UnPublish</a>
+    {% endif %}
+    <a href="{% url 'edit' blog.id %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'delete' blog.id %}" class="btn btn-danger">Delete</a>
+    {% endif %}
   </div>
 </div>
 {% endfor %}

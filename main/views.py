@@ -8,7 +8,29 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import BlogForm
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import PermissionDenied
 # Create your views here.
+@login_required(redirect_field_name='login')
+def edit(request,blog_id):
+	myblog = get_object_or_404(blog,id=blog_id)
+	if myblog.author==request.user:
+		form = BlogForm(instance=myblog)
+		if request.method=='POST':
+			form = BlogForm(request.POST, request.FILES, instance=myblog)
+			if form.is_valid():
+				obj = form.save(commit=False)
+				obj.author = request.user
+				if request.POST["submit"]=="Publish":
+					obj.is_publish = True
+				obj.save()
+				form = BlogForm()
+		context = {
+			'form':form 
+			}
+		return render(request,"post.html",context)
+	else:
+		raise PermissionDenied
+
 @login_required(redirect_field_name='login')
 def publish(request,blog_id):
 	myblog = get_object_or_404(blog,id=blog_id)
@@ -41,9 +63,9 @@ def Clap(request, blog_id):
 def comment(request, blog_id):
 	c = request.POST["comment"]
 	post = get_object_or_404(blog, id=blog_id)
-	print(c)
-	mycomment = Comment(post = post, commentator = request.user, text = c)
-	mycomment.save()
+	if c!="":
+		mycomment = Comment(post = post, commentator = request.user, text = c)
+		mycomment.save()
 	return HttpResponseRedirect(reverse("detail",kwargs={"id":blog_id}))
 
 def userprofile(request,username):
