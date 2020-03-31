@@ -39,3 +39,7 @@ body {
 .c {
     color: blue;
 }
+
+ul {
+    list-style: none;
+}

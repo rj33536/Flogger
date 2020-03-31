@@ -1,20 +1,19 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="container-sm">
+<div class="container bg-light p-3">
 <p class="display-4" style="border-bottom:1px solid !important;padding:10px;">{{blog.title}}</p>
-<p class="small">Last updated on {{blog.publish_date}}</p>
-<div class="row" >
-<img src = "https://cdn.onlinewebfonts.com/svg/img_383210.png" height=96 width=96 class="rounded-circle">
- <h1><small>{{blog.author}}</small></h1>
+<div class="row px-3 " >
+<p>{{blog.author}}   {{blog.publish_date}}</p>
  </div>
-<div class="row" >
+
+<div class="row px-3 " >
 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <div class="fb-like" data-href="{% url 'detail' blog.id %}" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
 </div>
-<img src = "{{blog.image.url}}" class="h-75 w-100">
+<div class="content mb-3">
+<img src = "{{blog.image.url}}" class="h-75 w-100 img-fluid mb-3 mt-3">
 <p>{{blog.text}}</p>
-<div class="row">
 {% if user in blog.claps.all %}
 <input type="submit" class="btn btn-primary" id="clap" onclick="clap()" value="clap">
 {% else %}
@@ -22,13 +21,27 @@
 {% endif %}
 </div>
 
-<div class="comments">
-<input name="comment" id="mycomment" class="form-control"/>
+<div class="comments mb-3 p-4">
+<input name="comment" id="mycomment" class="form-control mb-3"/>
 <input type="submit" class="btn btn-Success" onclick="comment()"  value="Comment please">
-
-<ul id="commentslist">
+</div>
+<ul id="commentslist ">
 {% for comment in blog.comments.all %}
-<li>{{comment.text}}, {{comment.commentator}}</li>
+<li class="comment"> 
+<article class="comment-body"> 
+<footer class="comment-meta"> 
+<div class="comment-author vcard">
+ <img alt="" src="https://secure.gravatar.com/avatar/1db49660482173223e50a06c031d236c?s=70&amp;d=wavatar&amp;r=g" srcset="https://secure.gravatar.com/avatar/1db49660482173223e50a06c031d236c?s=140&amp;d=wavatar&amp;r=g 2x" class="rounded-circle" height="70" width="70"> <b class="fn">{{comment.commentator}}</b>
+ </div> 
+ <div class="small"> 
+ <time> {{comment.created_date}} </time>
+</div>
+    </footer>
+     <div class="comment-content">
+      <p>{{comment.text}}</p>
+     </div>
+ </article> 
+ </li>
 {% endfor %}
 </ul>
 </div>

@@ -29,6 +29,7 @@ class Comment(models.Model):
 	post = models.ForeignKey(blog, on_delete=models.CASCADE, related_name='comments')
 	commentator = models.ForeignKey(User,on_delete = models.CASCADE, related_name="commmentator")
 	text = models.TextField()
+	created_date = models.DateTimeField(blank=True,null=True)
 	def __str__(self):
 		return self.text
 

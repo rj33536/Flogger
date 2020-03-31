@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate,login as auth_login,logout as auth_logout
 from .models import blog, Comment, Profile
@@ -7,7 +7,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .forms import BlogForm
-from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 # Create your views here.
 @login_required(redirect_field_name='login')
@@ -25,9 +24,10 @@ def edit(request,blog_id):
 					obj.publish()
 				form = BlogForm()
 		context = {
-			'form':form 
+			'form':form,
+			'blog_id':blog_id 
 			}
-		return render(request,"post.html",context)
+		return render(request,"edit.html",context)
 	else:
 		raise PermissionDenied
 
@@ -64,7 +64,7 @@ def comment(request, blog_id):
 	print(request.POST.keys(),c)
 	post = get_object_or_404(blog, id=blog_id)
 	if c!="":
-		mycomment = Comment(post = post, commentator = request.user, text = c)
+		mycomment = Comment(post = post, commentator = request.user, text = c, created_date=timezone.now())
 		mycomment.save()
 	return HttpResponse("success")
 	return HttpResponseRedirect(reverse("detail",kwargs={"id":blog_id}))
