@@ -5,6 +5,11 @@
 <p class="display-4" style="border-bottom:1px solid !important;padding:10px;">{{blog.title}}</p>
 <div class="row px-3 " >
 <p>{{blog.author}}   {{blog.publish_date}}</p>
+{% if user in blog.author.follower.all %}
+<button id="follow" class="btn btn-primary" onclick="follow()">unfollow</button>
+{% else %}
+<button id="follow" class="btn btn-muted" onclick="follow()">Follow</button>
+{% endif %}
  </div>
 
 <div class="row px-3 " >
@@ -51,7 +56,6 @@
 
   var xhttp = new XMLHttpRequest();
 function clap() {
-    console.log("here");
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
      var res = this.responseText;
@@ -67,6 +71,26 @@ function clap() {
     }
   };
   xhttp.open("GET", "{% url 'clap' blog.id %}", true);
+  
+  xhttp.send();
+}
+
+function follow() {
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     var res = this.responseText;
+     console.log(res);
+     if(res=="Success"){
+       var btn=document.body.querySelector('#follow');
+       btn.className="btn btn-primary";
+     }
+     if(res=='ununfollow'){
+       var btn=document.body.querySelector('#follow');
+       btn.className="btn btn-muted";
+     }
+    }
+  };
+  xhttp.open("GET", "{% url 'follow' blog.author %}", true);
   
   xhttp.send();
 }

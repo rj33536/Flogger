@@ -13,6 +13,7 @@ urlpatterns = [
     path('clap/<int:blog_id>',views.Clap,name="clap"),
     path('comment/<int:blog_id>',views.comment,name="comment"),
     path('users/<str:username>',views.userprofile, name="profile"),
+    path('follow/<str:username>',views.follow, name="follow"),
     path('publish/<int:blog_id>',views.publish,name="publish"),
     path('delete/<int:blog_id>',views.delete,name="delete"),
     path('edit/<int:blog_id>', views.edit, name="edit")

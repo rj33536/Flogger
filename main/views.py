@@ -69,6 +69,20 @@ def comment(request, blog_id):
 	return HttpResponse("success")
 	return HttpResponseRedirect(reverse("detail",kwargs={"id":blog_id}))
 
+@login_required(redirect_field_name='login')
+def follow(request,username):
+	user = get_object_or_404(User,username=username)
+	print()
+	userprofile = user.profile
+	follower = request.user
+	followerprofile = follower.profile
+	if follower in userprofile.follower.all():
+		userprofile.follower.remove(follower)
+		return HttpResponse("unfollow")
+	userprofile.follower.add(follower)
+	return HttpResponse("Success")
+
+
 def userprofile(request,username):
 	user = get_object_or_404(User,username=username)
 	context = {
