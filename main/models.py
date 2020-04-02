@@ -8,7 +8,8 @@ from django.dispatch import receiver
 # Create your models here.
 class blog(models.Model):
 	author = models.ForeignKey(User,on_delete = models.CASCADE, related_name="author")
-	title = models.CharField(max_length = 300)
+	title = models.CharField(max_length = 300, default="Just a cool blog")
+	description = models.CharField(max_length = 500)
 	text = models.TextField()
 	created_date = models.DateTimeField(blank=True,null=True)
 	publish_date = models.DateTimeField(blank = True,null = True)

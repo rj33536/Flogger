@@ -11,9 +11,9 @@
   <img src="https://images.unsplash.com/photo-1490533658566-1855b89cd85f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=985&q=80" class="card-img-top" alt="...">
   {% endif %}
   <div class="card-body">
-    <h5 class="card-title">{{blog.title}}</h5>
-    <p class="card-text">{{blog.text|truncatechars:450 }}</p>
-    <a href="{% url 'detail' blog.id %}" class="btn btn-primary">Read more</a>
+    <a href="{% url 'detail' blog.id %}"><h5 class="card-title">{{blog.title}}</h5></a>
+    <a href="{% url 'profile' blog.author.username %}"><p class="text-muted">{{blog.author.username}}</p></a>
+    <p class="card-text">{{blog.description|truncatechars:100 }}</p>
     {% if not blog.is_publish %}
     <a href="{% url 'publish' blog.id %}" class="btn btn-success">Publish</a>
     {% else %}

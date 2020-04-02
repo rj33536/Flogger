@@ -36,15 +36,15 @@ def publish(request,blog_id):
 	myblog = get_object_or_404(blog,id=blog_id)
 	if myblog.author==request.user:
 		myblog.is_publish = not myblog.is_publish
-		myblog.publish()
-	return HttpResponseRedirect(reverse("myblogs"))	
+		myblog.save()
+	return HttpResponseRedirect(reverse("blogs",kwargs={"username":myblog.author.username}))	
 
 @login_required(redirect_field_name='login')
 def delete(request,blog_id):
 	myblog = get_object_or_404(blog,id=blog_id)
 	if myblog.author==request.user:
 		myblog.delete()
-	return HttpResponseRedirect(reverse("myblogs"))	
+	return HttpResponseRedirect(reverse("blogs",kwargs={"username":myblog.author.username}))	
 
 
 @login_required(redirect_field_name='login')
@@ -97,9 +97,8 @@ def view_details(request,id):
 		}
 	return render(request,"view.html",context=context)
 
-@login_required(redirect_field_name='login')
-def myblogs(request):
-	user = request.user
+def blogswritten(request,username):
+	user = get_object_or_404(User,username=username)
 	MyBlogs = blog.objects.filter(author = user)
 	context ={
 		"user":user,

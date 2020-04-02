@@ -1,7 +1,27 @@
 {% extends 'base.html' %}
 {% block body %}
-{{userprofile.email}}
-{{userprofile.username}}
-hello
-{{userprofile.profile.follower.all}}
+<div class="container border bg-light">
+<div class="row">
+  <div class="col-lg-4">
+  <img class="img-thumbnail" src="https://secure.gravatar.com/avatar/1db49660482173223e50a06c031d236c?s=160&amp;d=wavatar&amp;r=g">
+  </div>
+  <div class="col-lg-4">
+   <p class="display-4" >{{userprofile.username}}</p>
+   <span><p>{{userprofile.profile.follower.all|length}} followers</p> </span>
+   
+</div>
+<div class="col-lg-4">
+<ul>
+{% for user in userprofile.profile.follower.all %}
+<li>
+{{user.username}}
+</li>
+{% endfor %}
+</ul>
+  </div>
+  <a class="btn btn-secondary" href="{% url 'blogs' userprofile.username %}">Look at {{userprofile.username}}'s blogs</a>
+
+</div>
+
+</div>
 {% endblock body %}
