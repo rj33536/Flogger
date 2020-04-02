@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<form method="post", class=" form-group text-center border border-dark m-5 p-5" enctype='multipart/form-data' action="{% url 'update_profile' %}">
+{% csrf_token %}
+{{form.as_p}}
+<input type="submit" name="submit" class="btn btn-success" value="Update"/>
+</form>
+{% endblock body %}

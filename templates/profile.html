@@ -7,6 +7,7 @@
   </div>
   <div class="col-lg-4">
    <p class="display-4" >{{userprofile.username}}</p>
+   <a href="{% url 'update_profile' %}"><kbd>Edit</kbd></a>
    <span><p>{{userprofile.profile.follower.all|length}} followers</p> </span>
    
 </div>

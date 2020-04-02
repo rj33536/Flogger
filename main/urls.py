@@ -16,7 +16,8 @@ urlpatterns = [
     path('follow/<str:username>',views.follow, name="follow"),
     path('publish/<int:blog_id>',views.publish,name="publish"),
     path('delete/<int:blog_id>',views.delete,name="delete"),
-    path('edit/<int:blog_id>', views.edit, name="edit")
+    path('edit/<int:blog_id>', views.edit, name="edit"),
+    path('update_profile',views.update_profile,name="update_profile")
 
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

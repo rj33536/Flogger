@@ -6,9 +6,25 @@ from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import BlogForm
+from .forms import BlogForm,UpdateProfile
 from django.core.exceptions import PermissionDenied
 # Create your views here.
+@login_required(redirect_field_name='login')
+def update_profile(request):
+    args = {}
+
+    if request.method == 'POST':
+        form = UpdateProfile(request.POST, instance=request.user)
+        form.actual_user = request.user
+        if form.is_valid():
+            form.update()
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        form = UpdateProfile(instance=request.user)
+
+    args['form'] = form
+    return render(request, 'update_profile.html', args)
+
 @login_required(redirect_field_name='login')
 def edit(request,blog_id):
 	myblog = get_object_or_404(blog,id=blog_id)

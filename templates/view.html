@@ -4,7 +4,7 @@
 <div class="container bg-light p-3">
 <p class="display-4" style="border-bottom:1px solid !important;padding:10px;">{{blog.title}}</p>
 <div class="row px-3 " >
-<p>{{blog.author}}   {{blog.publish_date}}</p>
+<a href="{% url 'profile' blog.author.username %}" class="text-muted"><p>{{blog.author.username}} {{blog.publish_date}}</p></a> 
 {% if user in blog.author.follower.all %}
 <kbd id="follow" class="btn-primary" onclick="follow()">unfollow</kbd>
 {% else %}
