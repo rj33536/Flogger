@@ -22,10 +22,10 @@ class UpdateProfile(forms.ModelForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
-
+    image = forms.ImageField(required = False)
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+        fields = ('username', 'email', 'first_name', 'last_name', 'image')
 
     def clean_email(self):
         username = self.cleaned_data.get('username')
@@ -38,6 +38,9 @@ class UpdateProfile(forms.ModelForm):
     def update(self, commit=True):
         user = self.save(commit=False)
         user.email = self.cleaned_data['email']
+        user.profile.image = self.cleaned_data['image']
+        print(user.profile.image)
+        user.profile.save()
 
         if commit:
             user.save()
