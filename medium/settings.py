@@ -26,7 +26,8 @@ SECRET_KEY = 'sb)jfna0v^g8_p^m!!!@#mm4qv^vtgqiz!fj)o)!39!fsy-x1%'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
+    '127.0.0.1','flogger101.herokuapp.com'
+
     ]
 
 
